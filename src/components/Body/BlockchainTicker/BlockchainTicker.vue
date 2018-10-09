@@ -8,7 +8,7 @@
             </div>
             <div class="col-xs-12 col-md-10">
                 <BlockchainTickerPrices 
-                    :tickerData="filteredTickers"
+                    :tickerData="filteredTickerData"
                     :getTickerData="getTickerData" />
             </div>
         </div>
@@ -19,6 +19,7 @@
 import BlockchainTickerPrices from './BlockchainTickerPrices/BlockchainTickerPrices'
 import BlockchainTickerFilters from './BlockchainTickerFilters/BlockchainTickerFilters'
 import { bus } from '../../../main';
+import { sortArrByKey } from '../../../helpers/helpers.js'
 
 export default {
   name: 'BlockchainTicker',
@@ -30,7 +31,8 @@ export default {
       return {
           currencies: [],
           filteredCurrencies: {},
-          tickerData: []
+          tickerData: [],
+          sorted: {}
       }
   },
   methods: {
@@ -50,34 +52,28 @@ export default {
                     response => { throw new Error('GET REQUEST for ticker failed', response) }
                 );
       },
-      sortData(sortBy, dir = 'asc') {
-          if(this.tickerData && sortBy) {
-              this.tickerData = this.tickerData.sort(function(a, b) {
-
-                if(dir === 'desc') {
-                    let temp = a;
-                    a = b;
-                    b = temp;
-                }
-
-                if(typeof a[sortBy] === 'string')
-                    return a[sortBy].localeCompare(b[sortBy]);
-                
-                if(typeof a[sortBy] === 'number')
-                    return a[sortBy] - b[sortBy];
-            });
+      setSorted(sObj) {
+          if(sObj.dir && sObj.sortBy) {
+              this.sorted = {...sObj};
           }
       }
   },
   created() {
       this.getTickerData();
 
-      // Sort Column data from event
-      bus.$on('sortColumn', this.sortData);
+      // Sort Column data from event in component(s):
+      // ./BlockchainTickerPrices/BlockchainTickerTable/BlockchainTickerTable
+      bus.$on('sortColumn', this.setSorted);
   },
   computed: {
-      filteredTickers() {
-          return this.tickerData.filter(tData => this.filteredCurrencies[tData.currency])
+      filteredTickerData() {
+          let filteredArr = [...(this.tickerData.filter(tData => this.filteredCurrencies[tData.currency]))];
+
+          if(this.sorted) {
+              filteredArr = sortArrByKey(filteredArr, this.sorted);
+          }
+
+          return filteredArr;
       }
   }
 }
