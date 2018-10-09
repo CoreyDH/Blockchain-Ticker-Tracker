@@ -1,0 +1,54 @@
+.fade-enter-active, .fade-leave-active {
+    transition: all .5s;
+  }
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.mobile-th {
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    #ticker-table .mobile-th {
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        /* text-decoration: underline */
+    }
+
+    #ticker-table table,
+    #ticker-table thead,
+    #ticker-table tbody,
+    #ticker-table th,
+    #ticker-table tr,
+    #ticker-table td { 
+		display: block; 
+    }
+    
+	#ticker-table thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	#ticker-table tr { 
+        border-bottom: 1px solid #666; 
+    }
+
+    #ticker-table tr:last-child { 
+        border-bottom: 0;
+    }
+	
+	#ticker-table td { 
+		border: none;
+		border-bottom: 1px solid #d7e0e4; 
+        position: relative;
+    }
+    
+    #ticker-table td:last-child {
+        border-bottom: 0;
+    }
+}

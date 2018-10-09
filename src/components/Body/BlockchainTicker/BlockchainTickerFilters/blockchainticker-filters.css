@@ -1,0 +1,37 @@
+/* Arrow Icon */
+.arrow::before {
+    content: "\E602";
+    color: #005172;
+    display: inline-block;
+    font-family: 'icomoon';
+    transition: 0.3s transform ease;
+}
+
+.arrow-right:before {
+    transform: rotate(-90deg);
+}
+
+/* Panel */
+#bt-filters .panel-body {
+    column-count: 1;
+}
+
+@media only screen and (min-width: 1200px) {
+    #bt-filters .panel-body {
+        column-count: 2;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    #bt-filters .panel-body {
+        column-count: 4;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #bt-filters .panel-body {
+        column-count: 3;
+    }
+}
+
+/* End Filter Panel */
