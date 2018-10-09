@@ -67,7 +67,7 @@ export default {
   },
   computed: {
       filteredTickerData() {
-          let filteredArr = [...(this.tickerData.filter(tData => this.filteredCurrencies[tData.currency]))];
+          let filteredArr = [...(this.tickerData.filter(tData => !this.filteredCurrencies[tData.currency]))];
 
           if(this.sorted) {
               filteredArr = sortArrByKey(filteredArr, this.sorted);

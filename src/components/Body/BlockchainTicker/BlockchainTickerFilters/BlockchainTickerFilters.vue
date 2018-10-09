@@ -1,7 +1,7 @@
 <template>
     <div id="bt-filters" class="panel">
         <div class="panel-heading pointer" v-on:click="toggleFilterPanel">
-            <h3 class="panel-title"><span class="arrow" v-bind:class="{ 'arrow-right': !showFilters }"></span> Filter by Currency</h3>
+            <h3 class="panel-title"><span class="arrow" v-bind:class="{ 'arrow-right': !showFilters }"></span> Hide Currency</h3>
         </div>
         <div class="panel-body panel-collapse collapse" v-bind:class="{ in: showFilters }">
             <div v-for="cur in currencies" v-bind:key="`${cur}-filter-checkbox-key`">
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import './blockchainticker-filters.css';
+import './blockchainticker-filters.css'
 
 export default {
   name: 'BlockchainTickerFilters',
